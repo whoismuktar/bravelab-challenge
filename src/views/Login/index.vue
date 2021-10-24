@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login allChildrenCenter fillHeight">
     <LoginCard />
   </div>
 </template>
@@ -12,3 +12,4 @@ export default {
   components: { LoginCard },
 }
 </script>
+<style lang="scss" scoped src="@/assets/styles/login.scss"></style>
