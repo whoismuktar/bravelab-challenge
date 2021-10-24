@@ -1,32 +1,68 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <button v-if="isSignedIn" class="logoutBtn" @click="logout">Logout</button>
+    <transition name="bounce">
+      <toast />
+    </transition>
+    <router-view />
   </div>
 </template>
+
+<script>
+import { mapGetters } from "vuex";
+export default {
+  data() {
+    return {
+      watchTime: "",
+    };
+  },
+  computed: {
+    ...mapGetters({
+      authExpiry: "auth/authExpiry",
+      isSignedIn: "auth/isSignedIn",
+    }),
+  },
+  watch: {
+    authExpiry: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+          this.timeWatcher();
+        } else if (!val) {
+          clearInterval(this.watchTime);
+        }
+      }
+    }
+  },
+  methods: {
+    logout() {
+      // clear interval on intended logout
+      clearInterval(this.watchTime);
+      this.$store.dispatch("auth/signOut");
+    },
+    timeWatcher() {
+      const current = new Date().getTime();
+      const expiry = new Date(this.authExpiry).getTime();
+
+      // method to check for expiry time, runs every 1 second
+      if (this.authExpiry) {
+        this.watchTime = setInterval(() => {
+          if (current >= expiry) {
+            clearInterval(this.watchTime);
+            this.$store.dispatch("auth/signOut");
+          }
+        }, 1000);
+      }
+    },
+  }
+};
+</script>
 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
