@@ -7,7 +7,24 @@ const routes = [
   {
     path: '/',
     name: 'Login',
-    component: () => import('../views/Login/')
+    alias: ['/login'], // alias for login or base route
+    component: () => import('../views/Login/'),
+    meta: {
+      requiresVisitor: true, // meta to determine non auth page
+    },
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('../views/Dashboard/'),
+    meta: {
+      requiresAuth: true, // meta to determine auth rotuer
+    },
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: () => import('../views/404')
   },
 ]
 
