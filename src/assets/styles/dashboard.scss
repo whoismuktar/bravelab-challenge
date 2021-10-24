@@ -1,0 +1,95 @@
+.data-table {
+    padding: 40px;
+    width: 70%;
+    min-height: 50vh;
+    margin: 0 auto;
+
+    .search-table {
+        display: flex;
+        margin-bottom: 10px;
+
+        #searchTableInput {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #edd7d7;
+        }
+    }
+    .table {
+        background-color: #fefefe;
+        border-collapse: collapse;
+        border-radius: 10px 10px 0 0;
+        box-shadow: $boxShadow2;
+        table-layout: auto;
+        width: 100%;
+        margin: 0 auto;
+        overflow: hidden;
+        text-align: left;
+        display: block;
+        height: 85vh;
+        overflow-y: scroll;
+
+        .no-result {
+            text-align: center;
+            font-size: 13px;
+            color: #aaaaaa;
+        }
+        th, td {
+            padding: 1rem;
+        }
+
+        &__header {
+            position: sticky;
+            top: 0;
+            background-color: #e1e8f2;
+            .table__head {
+                border-bottom: 1px solid #edeef2;
+                &__data {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+
+                    &__title {
+                        margin-right: 10px;
+                    }
+                }
+
+                .arrow-container {
+                    display: flex;
+                    flex-flow: column;
+                }
+            }
+        }
+
+        &__body {
+            &__row {
+                border-bottom: 1px solid #edeef2;
+                padding: 0 1.5rem;
+
+                & ._films, & ._starships {
+                    padding: 5px 0;
+                }
+
+            }
+
+            .loadmore {
+                position: sticky;
+                bottom: 0;
+
+                &__data {
+                    text-align: center;
+                    padding: 0;
+
+                    button {
+                        border: 0;
+                        padding: 15px 20px;
+                        width: 100%;
+                        background-color: $pryColor;
+                        color: #ffffff;
+                        border-radius: 0px 0px 10px 10px;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}
